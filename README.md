@@ -92,7 +92,7 @@ h1 {
     border-radius: 32px;
     height: 20px;
     width:220px;
-    text-align: center;
+    text-align: none;
 }
 .r1{
     font-style: oblique;
@@ -104,7 +104,7 @@ h1 {
     border-radius: 32px;
     height: 20px;
     width:220px;
-    text-align:center
+    text-align:none
 }
 .c1{
     font-style: oblique;
@@ -151,7 +151,7 @@ p{
                 <input type="submit" value="Calculate" id="c1"><br/>
             </div>
             <div class="formelt">
-                Power: <input type="text" name="power" value="{{power}}" id="formelt">  m<sup>2</sup><br/>
+                Power: <input type="text" name="power" value="{{power}}" id="formelt">  watts (W)<br/>
             </div>
         </form>
     </div>
@@ -165,25 +165,25 @@ from django.shortcuts import render
 def power(request): 
     context={} 
     context['power'] = "0" 
-    context['R'] = "0" 
-    context['I'] = "0" 
+    context['r'] = "0" 
+    context['i'] = "0" 
     if request.method == 'POST': 
         print("POST method is used")
-        R = request.POST.get('Resistance','0')
-        I = request.POST.get('Intensity','0')
+        r = request.POST.get('Resistance','0')
+        i = request.POST.get('Intensity','0')
         print('request=',request) 
-        print('Resistance=',R) 
-        print('Intensity=',I) 
-        power = int(R) * int(I) 
+        print('Resistance=',r) 
+        print('Intensity=',i) 
+        power = int(r) *int(i) *int(i) 
         context['power'] = power
-        context['R'] = R
-        context['I'] = I
-        print('Power=',power) 
+        context['r'] = r
+        context['i'] = i
+        print('power=',power) 
     return render(request,'mathapp/math.html',context)
 
 urls.py
 
-    from django.contrib import admin 
+from django.contrib import admin 
 from django.urls import path 
 from mathapp import views 
 urlpatterns = [ 
@@ -191,17 +191,18 @@ urlpatterns = [
     path('power/',views.power,name="calculatepower"),
     path('',views.power,name="calculatepower")
 ]
+
 ```
 
 
 ## SERVER SIDE PROCESSING:
 
 
-![alt text](<2 (2).png>)
+![alt text](<serverside processing (2).png>)
 
 ## HOMEPAGE:
 
-![alt text](<1 (2).png>)
+![alt text](<home page.png>)
 
 
 ## RESULT:
